@@ -3,9 +3,17 @@
 
 
 typedef struct __attribute__((packed)) {
-  uint32_t wasm_magic;
+  uint8_t wasm_magic[4];
   uint32_t wasm_version;
-} Wasm;
+} WasmHeader;
+
+bool is_wasm_header_valid(WasmHeader *wasm_header) {
+  return 
+    wasm_header->wasm_magic[0] == '\0' &&
+    wasm_header->wasm_magic[1] == 'a' &&
+    wasm_header->wasm_magic[2] == 's' &&
+    wasm_header->wasm_magic[3] == 'm';
+}
 
 int main(int argc, char **argv) {
   
@@ -16,11 +24,14 @@ int main(int argc, char **argv) {
   char *filename = *++argv;
 
   FILE *fptr = fopen(filename, "r");
-  Wasm wasm_struct;
+  WasmHeader wasm_header;
   
-  fread(&wasm_struct, sizeof(Wasm), 1, fptr);
+  fread(&wasm_header, sizeof(WasmHeader), 1, fptr);
 
-  printf("%x\n", wasm_struct.wasm_magic);
+  if (!is_wasm_header_valid(&wasm_header)) {
+    printf("This is not a valid WASM file\n");
+    return EXIT_FAILURE;
+  }
 
   return EXIT_SUCCESS;
 }
