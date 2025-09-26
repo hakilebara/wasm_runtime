@@ -36,6 +36,10 @@ int main(int argc, char **argv) {
     printf("This is not a valid WASM file\n");
     return EXIT_FAILURE;
   }
+  if (wasm_header.version != 1) {
+    printf("This WASM version is not supported\n");
+    return EXIT_FAILURE;
+  }
 
   return EXIT_SUCCESS;
 }
