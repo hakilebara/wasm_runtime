@@ -3,16 +3,20 @@
 
 
 typedef struct __attribute__((packed)) {
-  uint8_t wasm_magic[4];
-  uint32_t wasm_version;
+  uint8_t magic[4];
+  uint32_t version;
 } WasmHeader;
+
+typedef struct __attribute__((packed)) {
+  WasmHeader header;
+} WasmModule;
 
 bool is_wasm_header_valid(WasmHeader *wasm_header) {
   return 
-    wasm_header->wasm_magic[0] == '\0' &&
-    wasm_header->wasm_magic[1] == 'a' &&
-    wasm_header->wasm_magic[2] == 's' &&
-    wasm_header->wasm_magic[3] == 'm';
+    wasm_header->magic[0] == '\0' &&
+    wasm_header->magic[1] == 'a' &&
+    wasm_header->magic[2] == 's' &&
+    wasm_header->magic[3] == 'm';
 }
 
 int main(int argc, char **argv) {
