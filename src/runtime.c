@@ -2,6 +2,20 @@
 #include <stdlib.h>
 #include "../lib/leb128.h"
 
+#define CUSTOM_SECTION      0
+#define TYPE_SECTION        1
+#define IMPORT_SECTION      2
+#define FUNCTION_SECTION    3
+#define TABLE_SECTION       4
+#define MEMORY_SECTION      5
+#define GLOBAL_SECTION      6
+#define EXPORT_SECTION      7
+#define START_SECTION       8
+#define ELEMENT_SECTION     9
+#define CODE_SECTION        10
+#define DATA_SECTION        11
+#define DATA_COUNT_SECTION  12
+#define TAG_SECTION         13
 
 typedef struct __attribute__((packed)) {
   uint8_t magic[4];
@@ -46,75 +60,62 @@ int main(int argc, char **argv) {
   uint64_t section_size = 0;
   while(!feof(fptr)) {
     id = fgetc(fptr);
+    section_size = readULEB128FromFile(fptr);
 
     switch (id) {
-      case 0:
-        section_size = readULEB128FromFile(fptr);
+      case CUSTOM_SECTION:
         printf("0: Custom Section - size : %llu - pos: %ld\n", section_size, ftell(fptr));
         fseek(fptr, section_size, SEEK_CUR);
         break;
-      case 1:
-        section_size = readULEB128FromFile(fptr);
+      case TYPE_SECTION:
         printf("1: Type Section - size : %llu - pos: %ld\n", section_size, ftell(fptr));
         fseek(fptr, section_size, SEEK_CUR);
         break;
-      case 2:
-        section_size = readULEB128FromFile(fptr);
+      case IMPORT_SECTION:
         printf("2: Import Section - size : %llu - pos: %ld\n", section_size, ftell(fptr));
         fseek(fptr, section_size, SEEK_CUR);
         break;
-      case 3:
-        section_size = readULEB128FromFile(fptr);
+      case FUNCTION_SECTION:
         printf("3: Function Section - size : %llu - pos: %ld\n", section_size, ftell(fptr));
         fseek(fptr, section_size, SEEK_CUR);
         break;
-      case 4:
-        section_size = readULEB128FromFile(fptr);
+      case TABLE_SECTION:
         printf("4: Table Section - size : %llu - pos: %ld\n", section_size, ftell(fptr));
         fseek(fptr, section_size, SEEK_CUR);
         break;
-      case 5:
-        section_size = readULEB128FromFile(fptr);
+      case MEMORY_SECTION:
         printf("5: Memory Section - size : %llu - pos: %ld\n", section_size, ftell(fptr));
         fseek(fptr, section_size, SEEK_CUR);
         break;
-      case 6:
-        section_size = readULEB128FromFile(fptr);
+      case GLOBAL_SECTION:
         printf("6: Global Section - size : %llu - pos: %ld\n", section_size, ftell(fptr));
         fseek(fptr, section_size, SEEK_CUR);
         break;
-      case 7:
-        section_size = readULEB128FromFile(fptr);
+      case EXPORT_SECTION:
         printf("7: Export Section - size : %llu - pos: %ld\n", section_size, ftell(fptr));
         fseek(fptr, section_size, SEEK_CUR);
         break;
-      case 8:
-        section_size = readULEB128FromFile(fptr);
+      case START_SECTION:
         printf("8: Start Section - size : %llu - pos: %ld\n", section_size, ftell(fptr));
         fseek(fptr, section_size, SEEK_CUR);
         break;
-      case 9:
-        section_size = readULEB128FromFile(fptr);
+      case ELEMENT_SECTION:
         printf("9: Element Section - size : %llu - pos: %ld\n", section_size, ftell(fptr));
         fseek(fptr, section_size, SEEK_CUR);
         break;
-      case 10:
-        section_size = readULEB128FromFile(fptr);
+      case CODE_SECTION:
         printf("10: Code Section - size : %llu - pos: %ld\n", section_size, ftell(fptr));
         fseek(fptr, section_size, SEEK_CUR);
         break;
-      case 11:
-        section_size = readULEB128FromFile(fptr);
+      case DATA_SECTION:
         printf("11: Data Section - size : %llu - pos: %ld\n", section_size, ftell(fptr));
         fseek(fptr, section_size, SEEK_CUR);
         break;
-      case 12:
-        section_size = readULEB128FromFile(fptr);
+      case DATA_COUNT_SECTION:
         printf("12: Data Count Section - size : %llu - pos: %ld\n", section_size, ftell(fptr));
         fseek(fptr, section_size, SEEK_CUR);
         break;
-      case 13:
-        section_size = readULEB128FromFile(fptr);
+      case TAG_SECTION:
         printf("13: Tag Section - size : %llu - pos: %ld\n", section_size, ftell(fptr));
         fseek(fptr, section_size, SEEK_CUR);
         break;
