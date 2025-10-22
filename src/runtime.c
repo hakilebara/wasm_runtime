@@ -2,20 +2,23 @@
 #include <stdlib.h>
 #include "../lib/leb128.h"
 
-#define CUSTOM_SECTION      0
-#define TYPE_SECTION        1
-#define IMPORT_SECTION      2
-#define FUNCTION_SECTION    3
-#define TABLE_SECTION       4
-#define MEMORY_SECTION      5
-#define GLOBAL_SECTION      6
-#define EXPORT_SECTION      7
-#define START_SECTION       8
-#define ELEMENT_SECTION     9
-#define CODE_SECTION        10
-#define DATA_SECTION        11
-#define DATA_COUNT_SECTION  12
-#define TAG_SECTION         13
+typedef enum {
+  CUSTOM_SECTION,
+  TYPE_SECTION,
+  IMPORT_SECTION,
+  FUNCTION_SECTION,
+  TABLE_SECTION,
+  MEMORY_SECTION,
+  GLOBAL_SECTION,
+  EXPORT_SECTION,
+  START_SECTION,
+  ELEMENT_SECTION,
+  CODE_SECTION,
+  DATA_SECTION,
+  DATA_COUNT_SECTION,
+  TAG_SECTION,
+} WAsmSection;
+
 
 typedef struct __attribute__((packed)) {
   uint8_t magic[4];
